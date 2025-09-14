@@ -1,10 +1,10 @@
 'use server';
 /**
- * @fileOverview This file defines a Genkit flow for classifying waste from an image and suggesting disposal methods.
+ * @fileOverview This file defines a Genkit flow for classifying waste from an image and suggesting disposal and reuse methods.
  *
- * - classifyWasteFromImage - A function that takes an image of waste as input and returns suggested disposal methods.
+ * - classifyWasteFromImage - A function that takes an image of waste as input and returns suggested disposal and reuse methods.
  * - ClassifyWasteFromImageInput - The input type for the classifyWasteFromImage function, expects a data URI of the image.
- * - ClassifyWasteFromImageOutput - The return type for the classifyWasteFromImage function, provides suggested disposal methods.
+ * - ClassifyWasteFromImageOutput - The return type for the classifyWasteFromImage function, provides suggested disposal and reuse methods.
  */
 
 import {ai} from '@/ai/genkit';
@@ -25,6 +25,9 @@ const ClassifyWasteFromImageOutputSchema = z.object({
   disposalMethods: z
     .string()
     .describe('Suggested disposal methods for the waste in the image.'),
+  reductionSuggestion: z
+    .string()
+    .describe('A suggestion on how to reduce or reuse the waste item.'),
 });
 export type ClassifyWasteFromImageOutput = z.infer<
   typeof ClassifyWasteFromImageOutputSchema
@@ -40,12 +43,14 @@ const prompt = ai.definePrompt({
   name: 'classifyWasteFromImagePrompt',
   input: {schema: ClassifyWasteFromImageInputSchema},
   output: {schema: ClassifyWasteFromImageOutputSchema},
-  prompt: `You are an AI waste classifier. Given an image of waste, you will identify the materials and suggest appropriate disposal methods.
+  prompt: `You are an AI waste classifier and sustainability expert. Given an image of a waste item, you will identify the materials and suggest appropriate disposal methods.
 
-  Here is the image of the waste:
-  {{media url=photoDataUri}}
+In addition, you will provide a creative and practical suggestion for how the item could be reused or upcycled, or how to reduce the use of such items in the future.
 
-  Please provide a detailed suggestion of disposal methods.
+Here is the image of the waste:
+{{media url=photoDataUri}}
+
+Please provide a detailed suggestion of disposal methods and a separate suggestion for reduction/reuse.
   `,
 });
 

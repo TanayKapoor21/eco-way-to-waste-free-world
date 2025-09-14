@@ -12,16 +12,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { classifyWasteFromImage } from "@/ai/flows/classify-waste-from-image";
+import { classifyWasteFromImage, ClassifyWasteFromImageOutput } from "@/ai/flows/classify-waste-from-image";
 import Image from "next/image";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Lightbulb, Loader, Upload, X } from "lucide-react";
+import { Lightbulb, Loader, Recycle, Upload, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export function WasteClassifier() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<ClassifyWasteFromImageOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -64,7 +64,7 @@ export function WasteClassifier() {
 
     try {
       const response = await classifyWasteFromImage({ photoDataUri: preview });
-      setResult(response.disposalMethods);
+      setResult(response);
     } catch (error) {
       console.error("Error classifying waste:", error);
       toast({
@@ -82,8 +82,7 @@ export function WasteClassifier() {
       <CardHeader>
         <CardTitle>AI Waste Classifier</CardTitle>
         <CardDescription>
-          Upload a photo of a waste item, and our AI will suggest how to dispose
-          of it.
+          Upload a photo of a waste item, and our AI will suggest how to dispose of or reuse it.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -118,13 +117,22 @@ export function WasteClassifier() {
         )}
 
         {result && (
-          <Alert>
-            <Lightbulb className="h-4 w-4" />
-            <AlertTitle>Disposal Suggestion</AlertTitle>
-            <AlertDescription>
-              <p className="whitespace-pre-wrap">{result}</p>
-            </AlertDescription>
-          </Alert>
+          <div className="space-y-4">
+            <Alert>
+              <Lightbulb className="h-4 w-4" />
+              <AlertTitle>Disposal Suggestion</AlertTitle>
+              <AlertDescription>
+                <p className="whitespace-pre-wrap">{result.disposalMethods}</p>
+              </AlertDescription>
+            </Alert>
+            <Alert variant="default" className="border-green-500/50 text-green-900 dark:text-green-200 [&>svg]:text-green-500">
+              <Recycle className="h-4 w-4" />
+              <AlertTitle className="text-green-700 dark:text-green-300">Reuse/Reduction Tip</AlertTitle>
+              <AlertDescription>
+                <p className="whitespace-pre-wrap">{result.reductionSuggestion}</p>
+              </AlertDescription>
+            </Alert>
+          </div>
         )}
 
         {isLoading && (

@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { ThemeToggle } from '@/components/features/theme-toggle';
 
 const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -88,7 +89,9 @@ export default function DashboardLayout({
           <h1 className="text-xl font-headline font-semibold lg:hidden">
             EWWW
           </h1>
-          <div>{/* Placeholder for header content */}</div>
+          <div>
+            <ThemeToggle />
+          </div>
         </header>
         <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
           {children}

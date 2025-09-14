@@ -9,31 +9,31 @@ export type RecyclingCenter = {
 export const mockRecyclingCenters: RecyclingCenter[] = [
   {
     id: 1,
-    name: 'Mumbai Recycling Co.',
+    name: 'Gurugram GreenCycle',
     wasteTypes: ['plastic', 'paper', 'glass'],
-    position: { lat: 19.0760, lng: 72.8777 },
-    address: '123 Marine Drive, Mumbai, MH',
+    position: { lat: 28.4595, lng: 77.0266 },
+    address: '123 MG Road, Gurugram, HR',
   },
   {
     id: 2,
-    name: 'Eco Warriors Mumbai',
+    name: 'Delhi E-Waste Experts',
     wasteTypes: ['electronics', 'batteries'],
-    position: { lat: 19.08, lng: 72.88 },
-    address: '456 Juhu Beach Rd, Mumbai, MH',
+    position: { lat: 28.6139, lng: 77.2090 },
+    address: '456 Connaught Place, New Delhi, DL',
   },
   {
     id: 3,
-    name: 'Bandra Recyclers',
+    name: 'Noida Metal Recyclers',
     wasteTypes: ['paper', 'metal'],
-    position: { lat: 19.05, lng: 72.83 },
-    address: '789 Linking Road, Mumbai, MH',
+    position: { lat: 28.5355, lng: 77.3910 },
+    address: '789 Sector 18, Noida, UP',
   },
   {
     id: 4,
-    name: 'City Compost Hub',
+    name: 'South Delhi Compost Hub',
     wasteTypes: ['organic'],
-    position: { lat: 19.1, lng: 72.85 },
-    address: '101 Powai Lake Rd, Mumbai, MH',
+    position: { lat: 28.5273, lng: 77.2057 },
+    address: '101 Hauz Khas Village, New Delhi, DL',
   },
 ];
 

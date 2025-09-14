@@ -62,11 +62,14 @@ export function ARWasteSorter() {
             console.error('AR Sorter error:', error);
             // We don't show a toast here to avoid spamming the user on repeated failures.
             // The component will just try again after the interval.
+        } finally {
+            setIsProcessing(false);
+            scheduleNextScan(); // Schedule the next scan after this one is done.
         }
+    } else {
+        setIsProcessing(false);
+        scheduleNextScan();
     }
-    
-    setIsProcessing(false);
-    scheduleNextScan(); // Schedule the next scan after this one is done.
   }, [isProcessing, hasCameraPermission, scheduleNextScan]);
 
   useEffect(() => {

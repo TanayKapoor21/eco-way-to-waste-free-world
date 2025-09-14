@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -65,13 +66,21 @@ export function WasteClassifier() {
     try {
       const response = await classifyWasteFromImage({ photoDataUri: preview });
       setResult(response);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error classifying waste:", error);
-      toast({
-        variant: "destructive",
-        title: "Classification Failed",
-        description: "Something went wrong. Please try again.",
-      });
+      if (error.message && error.message.includes("503")) {
+          toast({
+            variant: "destructive",
+            title: "AI Model Overloaded",
+            description: "The AI is currently busy. Please wait a moment and try again.",
+          });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Classification Failed",
+          description: "Something went wrong. Please try again.",
+        });
+      }
     } finally {
       setIsLoading(false);
     }

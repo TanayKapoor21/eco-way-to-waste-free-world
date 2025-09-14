@@ -23,6 +23,7 @@ export function ARWasteSorter() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<ARWasteSorterOutput>({ category: 'unknown', itemName: 'N/A' });
   const { toast } = useToast();
+  const processingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const getCameraPermission = async () => {
@@ -47,49 +48,71 @@ export function ARWasteSorter() {
     getCameraPermission();
     
     return () => {
-        // Stop camera stream on component unmount
         if (videoRef.current && videoRef.current.srcObject) {
             const stream = videoRef.current.srcObject as MediaStream;
             stream.getTracks().forEach(track => track.stop());
+        }
+        if (processingTimeoutRef.current) {
+          clearTimeout(processingTimeoutRef.current);
         }
     }
   }, [toast]);
 
   const captureAndClassify = useCallback(async () => {
-    if (isProcessing || !videoRef.current || !canvasRef.current || !hasCameraPermission) return;
+    if (isProcessing || !videoRef.current || !canvasRef.current || !hasCameraPermission || videoRef.current.videoWidth === 0) {
+      return;
+    }
+    
     setIsProcessing(true);
+    
+    // Reset timeout if it exists
+    if (processingTimeoutRef.current) {
+      clearTimeout(processingTimeoutRef.current);
+    }
+    // Failsafe to reset isProcessing state after 10s
+    processingTimeoutRef.current = setTimeout(() => setIsProcessing(false), 10000);
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
     
     if (context) {
-        // Set canvas size to match video to avoid distortion
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const frameDataUri = canvas.toDataURL('image/jpeg', 0.5); // Use jpeg for smaller size
+        const frameDataUri = canvas.toDataURL('image/jpeg', 0.5);
         
         try {
             const response = await arWasteSorter({ frameDataUri });
             setResult(response);
         } catch (error) {
             console.error('AR Sorter error:', error);
-            // Don't toast every error to avoid spamming the user
         }
     }
     
     setIsProcessing(false);
+    if (processingTimeoutRef.current) {
+      clearTimeout(processingTimeoutRef.current);
+    }
   }, [isProcessing, hasCameraPermission]);
 
   useEffect(() => {
-    // Run classification every 5 seconds
-    const interval = setInterval(() => {
-        captureAndClassify();
-    }, 5000);
+    if (!hasCameraPermission) return;
 
-    return () => clearInterval(interval);
-  }, [captureAndClassify]);
+    // Start scanning after a short delay to ensure camera is ready
+    const startTimeout = setTimeout(() => {
+      const interval = setInterval(() => {
+        captureAndClassify();
+      }, 5000);
+      
+      // Initial scan
+      captureAndClassify();
+
+      return () => clearInterval(interval);
+    }, 1000); // 1-second delay
+
+    return () => clearTimeout(startTimeout);
+  }, [hasCameraPermission, captureAndClassify]);
 
   const currentCategory = categoryConfig[result.category];
 

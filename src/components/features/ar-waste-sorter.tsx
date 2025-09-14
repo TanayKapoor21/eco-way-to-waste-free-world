@@ -83,10 +83,10 @@ export function ARWasteSorter() {
   }, [isProcessing, hasCameraPermission]);
 
   useEffect(() => {
-    // Run classification every 2 seconds
+    // Run classification every 5 seconds
     const interval = setInterval(() => {
         captureAndClassify();
-    }, 2000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [captureAndClassify]);

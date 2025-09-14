@@ -16,6 +16,8 @@ const categoryConfig = {
     unknown: { icon: Loader, label: 'Detecting...', color: 'bg-muted', description: "Point your camera at a waste item." }
 };
 
+const SCAN_INTERVAL = 5000; // 5 seconds
+
 export function ARWasteSorter() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -23,7 +25,49 @@ export function ARWasteSorter() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<ARWasteSorterOutput>({ category: 'unknown', itemName: 'N/A' });
   const { toast } = useToast();
-  const processingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const scanTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const scheduleNextScan = useCallback(() => {
+    if (scanTimeoutRef.current) {
+        clearTimeout(scanTimeoutRef.current);
+    }
+    scanTimeoutRef.current = setTimeout(() => {
+        captureAndClassify();
+    }, SCAN_INTERVAL);
+  }, []);
+
+
+  const captureAndClassify = useCallback(async () => {
+    if (isProcessing || !videoRef.current || !canvasRef.current || !hasCameraPermission || videoRef.current.videoWidth === 0) {
+      scheduleNextScan();
+      return;
+    }
+    
+    setIsProcessing(true);
+
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    
+    if (context) {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const frameDataUri = canvas.toDataURL('image/jpeg', 0.5);
+        
+        try {
+            const response = await arWasteSorter({ frameDataUri });
+            setResult(response);
+        } catch (error) {
+            console.error('AR Sorter error:', error);
+            // We don't show a toast here to avoid spamming the user on repeated failures.
+            // The component will just try again after the interval.
+        }
+    }
+    
+    setIsProcessing(false);
+    scheduleNextScan(); // Schedule the next scan after this one is done.
+  }, [isProcessing, hasCameraPermission, scheduleNextScan]);
 
   useEffect(() => {
     const getCameraPermission = async () => {
@@ -52,66 +96,22 @@ export function ARWasteSorter() {
             const stream = videoRef.current.srcObject as MediaStream;
             stream.getTracks().forEach(track => track.stop());
         }
-        if (processingTimeoutRef.current) {
-          clearTimeout(processingTimeoutRef.current);
+        if (scanTimeoutRef.current) {
+          clearTimeout(scanTimeoutRef.current);
         }
     }
   }, [toast]);
 
-  const captureAndClassify = useCallback(async () => {
-    if (isProcessing || !videoRef.current || !canvasRef.current || !hasCameraPermission || videoRef.current.videoWidth === 0) {
-      return;
-    }
-    
-    setIsProcessing(true);
-    
-    // Reset timeout if it exists
-    if (processingTimeoutRef.current) {
-      clearTimeout(processingTimeoutRef.current);
-    }
-    // Failsafe to reset isProcessing state after 10s
-    processingTimeoutRef.current = setTimeout(() => setIsProcessing(false), 10000);
-
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-    
-    if (context) {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const frameDataUri = canvas.toDataURL('image/jpeg', 0.5);
-        
-        try {
-            const response = await arWasteSorter({ frameDataUri });
-            setResult(response);
-        } catch (error) {
-            console.error('AR Sorter error:', error);
-        }
-    }
-    
-    setIsProcessing(false);
-    if (processingTimeoutRef.current) {
-      clearTimeout(processingTimeoutRef.current);
-    }
-  }, [isProcessing, hasCameraPermission]);
 
   useEffect(() => {
-    if (!hasCameraPermission) return;
-
-    // Start scanning after a short delay to ensure camera is ready
-    const startTimeout = setTimeout(() => {
-      const interval = setInterval(() => {
+    if (hasCameraPermission) {
+      // Start the scanning loop once camera is ready
+      const initialScanTimeout = setTimeout(() => {
         captureAndClassify();
-      }, 5000);
-      
-      // Initial scan
-      captureAndClassify();
+      }, 1000); // Wait 1 sec for camera to initialize
 
-      return () => clearInterval(interval);
-    }, 1000); // 1-second delay
-
-    return () => clearTimeout(startTimeout);
+      return () => clearTimeout(initialScanTimeout);
+    }
   }, [hasCameraPermission, captureAndClassify]);
 
   const currentCategory = categoryConfig[result.category];
@@ -135,14 +135,14 @@ export function ARWasteSorter() {
             </div>
           )}
 
-          {isProcessing && result.category === 'unknown' && (
+          {isProcessing && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/50">
                   <Loader className="h-8 w-8 animate-spin text-white" />
               </div>
           )}
         </div>
 
-        <Alert className={`${currentCategory.color} border-0 text-white`}>
+        <Alert className={`${currentCategory.color} border-0 text-white transition-colors duration-500`}>
           <currentCategory.icon className="h-4 w-4 text-white" />
           <AlertTitle className="flex justify-between items-center">
              <span>{currentCategory.label}</span>

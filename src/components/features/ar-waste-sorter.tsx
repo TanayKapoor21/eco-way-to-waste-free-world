@@ -2,22 +2,21 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { arWasteSorter, ARWasteSorterOutput } from '@/ai/flows/ar-waste-sorter';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
-import { Camera, Loader, Trash2, Recycle, Leaf, Package } from 'lucide-react';
+import { Camera, Loader, Trash2, Recycle, Leaf, Package, Scan } from 'lucide-react';
 import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
 
 const categoryConfig = {
     wet: { icon: Leaf, label: 'Wet Waste', color: 'bg-green-500', description: "Food scraps, organic material." },
     dry: { icon: Package, label: 'Dry Waste', color: 'bg-gray-500', description: "Non-recyclable, non-organic waste." },
     ewaste: { icon: Trash2, label: 'E-Waste', color: 'bg-blue-500', description: "Electronics, batteries, cables." },
     recyclable: { icon: Recycle, label: 'Recyclable', color: 'bg-yellow-500 text-black', description: "Paper, glass, some plastics." },
-    unknown: { icon: Loader, label: 'Detecting...', color: 'bg-muted', description: "Point your camera at a waste item." }
+    unknown: { icon: Loader, label: 'Ready to Scan', color: 'bg-muted', description: "Point your camera at a waste item and press scan." }
 };
-
-const SCAN_INTERVAL = 5000; // 5 seconds
 
 export function ARWasteSorter() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -26,23 +25,9 @@ export function ARWasteSorter() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<ARWasteSorterOutput>({ category: 'unknown', itemName: 'N/A' });
   const { toast } = useToast();
-  const scanTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const scheduleNextScan = useCallback(() => {
-    if (scanTimeoutRef.current) {
-        clearTimeout(scanTimeoutRef.current);
-    }
-    scanTimeoutRef.current = setTimeout(() => {
-        captureAndClassify();
-    }, SCAN_INTERVAL);
-  }, []);
-
 
   const captureAndClassify = useCallback(async () => {
-    if (isProcessing || !videoRef.current || !canvasRef.current || !hasCameraPermission || videoRef.current.videoWidth === 0) {
-      scheduleNextScan();
-      return;
-    }
+    if (isProcessing || !videoRef.current || !canvasRef.current || !hasCameraPermission) return;
     
     setIsProcessing(true);
 
@@ -59,19 +44,28 @@ export function ARWasteSorter() {
         try {
             const response = await arWasteSorter({ frameDataUri });
             setResult(response);
-        } catch (error) {
+        } catch (error: any) {
             console.error('AR Sorter error:', error);
-            // We don't show a toast here to avoid spamming the user on repeated failures.
-            // The component will just try again after the interval.
+            if (error.message && error.message.includes("503")) {
+              toast({
+                variant: "destructive",
+                title: "AI Model Overloaded",
+                description: "The AI is currently busy. Please wait a moment and try again.",
+              });
+            } else {
+              toast({
+                variant: 'destructive',
+                title: 'Classification Failed',
+                description: 'Could not classify the item. Please try again.',
+              });
+            }
         } finally {
             setIsProcessing(false);
-            scheduleNextScan(); // Schedule the next scan after this one is done.
         }
     } else {
         setIsProcessing(false);
-        scheduleNextScan();
     }
-  }, [isProcessing, hasCameraPermission, scheduleNextScan]);
+  }, [isProcessing, hasCameraPermission, toast]);
 
   useEffect(() => {
     const getCameraPermission = async () => {
@@ -100,30 +94,8 @@ export function ARWasteSorter() {
             const stream = videoRef.current.srcObject as MediaStream;
             stream.getTracks().forEach(track => track.stop());
         }
-        if (scanTimeoutRef.current) {
-          clearTimeout(scanTimeoutRef.current);
-        }
     }
   }, [toast]);
-
-
-  useEffect(() => {
-    if (hasCameraPermission && videoRef.current) {
-      const videoElement = videoRef.current;
-      
-      const handleCanPlay = () => {
-        // Start the scanning loop once camera is ready and playing
-        const initialScanTimeout = setTimeout(() => {
-          captureAndClassify();
-        }, 1000); // Wait 1 sec for camera to initialize
-
-        return () => clearTimeout(initialScanTimeout);
-      };
-
-      videoElement.addEventListener('canplay', handleCanPlay);
-      return () => videoElement.removeEventListener('canplay', handleCanPlay);
-    }
-  }, [hasCameraPermission, captureAndClassify]);
 
   const currentCategory = categoryConfig[result.category];
 
@@ -145,12 +117,6 @@ export function ARWasteSorter() {
                 <p className="text-center">Please allow camera access to use this feature.</p>
             </div>
           )}
-
-          {isProcessing && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                  <Loader className="h-8 w-8 animate-spin text-white" />
-              </div>
-          )}
         </div>
 
         <Alert className={`${currentCategory.color} border-0 text-white transition-colors duration-500`}>
@@ -166,6 +132,21 @@ export function ARWasteSorter() {
           </AlertDescription>
         </Alert>
       </CardContent>
+      <CardFooter>
+        <Button onClick={captureAndClassify} disabled={isProcessing || !hasCameraPermission} className="w-full">
+            {isProcessing ? (
+                <>
+                    <Loader className="mr-2 h-4 w-4 animate-spin" />
+                    Scanning...
+                </>
+            ) : (
+                <>
+                    <Scan className="mr-2 h-4 w-4" />
+                    Scan Item
+                </>
+            )}
+        </Button>
+      </CardFooter>
     </Card>
   );
 }

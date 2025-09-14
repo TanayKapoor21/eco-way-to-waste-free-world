@@ -95,7 +95,7 @@ export function RecyclingLocator() {
       <div className="lg:col-span-2 h-full rounded-lg overflow-hidden border">
         <APIProvider apiKey={API_KEY}>
           <Map
-            defaultCenter={{ lat: 34.0522, lng: -118.2437 }}
+            defaultCenter={{ lat: 19.0760, lng: 72.8777 }}
             defaultZoom={12}
             mapId="ewww-map"
             gestureHandling={'greedy'}

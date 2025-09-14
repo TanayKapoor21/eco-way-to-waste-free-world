@@ -9,31 +9,31 @@ export type RecyclingCenter = {
 export const mockRecyclingCenters: RecyclingCenter[] = [
   {
     id: 1,
-    name: 'GreenValley Recycling',
+    name: 'Mumbai Recycling Co.',
     wasteTypes: ['plastic', 'paper', 'glass'],
-    position: { lat: 34.0522, lng: -118.2437 },
-    address: '123 Main St, Los Angeles, CA',
+    position: { lat: 19.0760, lng: 72.8777 },
+    address: '123 Marine Drive, Mumbai, MH',
   },
   {
     id: 2,
-    name: 'Eco-First Center',
+    name: 'Eco Warriors Mumbai',
     wasteTypes: ['electronics', 'batteries'],
-    position: { lat: 34.056, lng: -118.251 },
-    address: '456 Oak Ave, Los Angeles, CA',
+    position: { lat: 19.08, lng: 72.88 },
+    address: '456 Juhu Beach Rd, Mumbai, MH',
   },
   {
     id: 3,
-    name: 'Metro Recyclers',
+    name: 'Bandra Recyclers',
     wasteTypes: ['paper', 'metal'],
-    position: { lat: 34.048, lng: -118.235 },
-    address: '789 Pine Ln, Los Angeles, CA',
+    position: { lat: 19.05, lng: 72.83 },
+    address: '789 Linking Road, Mumbai, MH',
   },
   {
     id: 4,
-    name: 'City Organic Waste',
+    name: 'City Compost Hub',
     wasteTypes: ['organic'],
-    position: { lat: 34.061, lng: -118.245 },
-    address: '101 Maple Dr, Los Angeles, CA',
+    position: { lat: 19.1, lng: 72.85 },
+    address: '101 Powai Lake Rd, Mumbai, MH',
   },
 ];
 

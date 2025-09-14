@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from 'react';
@@ -107,13 +108,20 @@ export function ARWasteSorter() {
 
 
   useEffect(() => {
-    if (hasCameraPermission) {
-      // Start the scanning loop once camera is ready
-      const initialScanTimeout = setTimeout(() => {
-        captureAndClassify();
-      }, 1000); // Wait 1 sec for camera to initialize
+    if (hasCameraPermission && videoRef.current) {
+      const videoElement = videoRef.current;
+      
+      const handleCanPlay = () => {
+        // Start the scanning loop once camera is ready and playing
+        const initialScanTimeout = setTimeout(() => {
+          captureAndClassify();
+        }, 1000); // Wait 1 sec for camera to initialize
 
-      return () => clearTimeout(initialScanTimeout);
+        return () => clearTimeout(initialScanTimeout);
+      };
+
+      videoElement.addEventListener('canplay', handleCanPlay);
+      return () => videoElement.removeEventListener('canplay', handleCanPlay);
     }
   }, [hasCameraPermission, captureAndClassify]);
 

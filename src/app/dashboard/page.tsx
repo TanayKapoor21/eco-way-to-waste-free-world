@@ -2,7 +2,7 @@ import { CarbonTracker } from '@/components/features/carbon-tracker';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowRight, Camera, Map, Bot, Users } from 'lucide-react';
+import { ArrowRight, Camera, Map, Bot, Users, Scan } from 'lucide-react';
 
 const quickLinks = [
     {
@@ -11,6 +11,13 @@ const quickLinks = [
       description: 'Snap a photo to learn how to dispose of an item.',
       icon: Camera,
       color: 'text-rose-500'
+    },
+    {
+      href: '/dashboard/ar-sorter',
+      title: 'AR Sorter',
+      description: 'Use your camera to sort waste in real-time.',
+      icon: Scan,
+      color: 'text-teal-500'
     },
     {
       href: '/dashboard/locator',

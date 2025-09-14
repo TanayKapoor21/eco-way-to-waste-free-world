@@ -3,3 +3,4 @@ config();
 
 import '@/ai/flows/chatbot-assists-with-disposal-queries.ts';
 import '@/ai/flows/classify-waste-from-image.ts';
+import '@/ai/flows/ar-waste-sorter.ts';

@@ -17,9 +17,9 @@ import {
   LayoutDashboard,
   Camera,
   Map,
-  MessageCircle,
   Users,
   Bot,
+  Scan,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -28,6 +28,7 @@ import { ThemeToggle } from '@/components/features/theme-toggle';
 const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/dashboard/classify', icon: Camera, label: 'Waste Classifier' },
+  { href: '/dashboard/ar-sorter', icon: Scan, label: 'AR Sorter' },
   { href: '/dashboard/locator', icon: Map, label: 'Recycling Locator' },
   { href: '/dashboard/chatbot', icon: Bot, label: 'AI Chatbot' },
   { href: '/dashboard/forum', icon: Users, label: 'Community Forum' },

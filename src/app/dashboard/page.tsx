@@ -1,6 +1,5 @@
 import { CarbonTracker } from '@/components/features/carbon-tracker';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight, Camera, Map, Bot, Users, Scan } from 'lucide-react';
 
@@ -52,22 +51,24 @@ export default function DashboardPage() {
 
       <CarbonTracker />
 
-      <Card>
+      <Card className="bg-card/50 border-border/50">
         <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
             <CardDescription>Jump right into one of our core features.</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <CardContent className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
             {quickLinks.map(link => (
                 <Link href={link.href} key={link.href} className="group">
-                    <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <Card className="h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 hover:bg-card">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
                            <CardTitle className="text-lg font-medium">{link.title}</CardTitle>
-                           <link.icon className={`h-6 w-6 ${link.color}`} />
+                           <div className="p-2 rounded-full bg-secondary">
+                            <link.icon className="h-5 w-5 text-secondary-foreground" />
+                           </div>
                         </CardHeader>
                         <CardContent>
                            <p className="text-sm text-muted-foreground mb-4">{link.description}</p>
-                            <div className="text-sm font-semibold text-primary flex items-center group-hover:underline">
+                            <div className="text-sm font-semibold text-primary flex items-center opacity-80 group-hover:opacity-100">
                                 Go <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                             </div>
                         </CardContent>

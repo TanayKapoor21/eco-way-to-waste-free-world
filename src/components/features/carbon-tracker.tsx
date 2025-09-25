@@ -81,15 +81,17 @@ export function CarbonTracker() {
             <div className="h-80 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData}>
-                  <XAxis dataKey="name" stroke="hsl(var(--foreground))" opacity={0.8} />
-                  <YAxis stroke="hsl(var(--foreground))" opacity={0.8} />
+                  <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} />
+                  <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} />
                   <Tooltip
+                    cursor={{fill: 'hsl(var(--muted))'}}
                     contentStyle={{
                       backgroundColor: 'hsl(var(--card))',
                       borderColor: 'hsl(var(--border))',
+                      borderRadius: 'var(--radius)'
                     }}
                   />
-                  <Legend />
+                  <Legend iconType="circle" />
                   <Bar
                     dataKey="recycled"
                     fill="hsl(var(--primary))"
@@ -101,6 +103,7 @@ export function CarbonTracker() {
                     fill="hsl(var(--muted-foreground))"
                     name="Landfilled"
                     radius={[4, 4, 0, 0]}
+                    opacity={0.5}
                   />
                 </BarChart>
               </ResponsiveContainer>
@@ -116,26 +119,26 @@ export function CarbonTracker() {
             <CardDescription>Your eco-achievements this year</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
               <div className="flex items-center gap-3">
                 <Recycle className="h-6 w-6 text-primary" />
                 <span className="font-medium">Total Recycled</span>
               </div>
               <span className="font-bold text-lg">{currentStats.totalRecycled.toFixed(0)} kg</span>
             </div>
-            <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
               <div className="flex items-center gap-3">
                 <Leaf className="h-6 w-6 text-green-500" />
                 <span className="font-medium">CO₂ Saved</span>
               </div>
               <span className="font-bold text-lg">{currentStats.co2Saved.toFixed(0)} kg</span>
             </div>
-            <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                <div className="flex items-center gap-3">
-                <div className='p-1 bg-accent rounded-full'><Recycle className="h-4 w-4 text-accent-foreground" /></div>
+                <div className='p-1.5 bg-primary rounded-full'><Recycle className="h-4 w-4 text-primary-foreground" /></div>
                 <span className="font-medium">Diversion Rate</span>
               </div>
-              <Badge variant="default" className="bg-primary text-lg">{currentStats.diversionRate.toFixed(1)}%</Badge>
+              <Badge variant="default" className="bg-primary/90 text-lg">{currentStats.diversionRate.toFixed(1)}%</Badge>
             </div>
           </CardContent>
         </Card>

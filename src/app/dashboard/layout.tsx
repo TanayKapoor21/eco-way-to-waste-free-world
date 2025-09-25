@@ -43,15 +43,15 @@ export default function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <Sidebar>
+      <Sidebar collapsible="icon" variant="sidebar" side="left">
         <SidebarHeader>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-sidebar-accent" asChild>
+            <Button variant="ghost" size="icon" className="text-sidebar-primary hover:bg-sidebar-accent" asChild>
               <Link href="/dashboard">
                 <Leaf />
               </Link>
             </Button>
-            <h1 className="text-lg font-headline font-semibold text-primary-foreground group-data-[collapsible=icon]:hidden">
+            <h1 className="text-xl font-headline font-semibold text-sidebar-foreground group-data-[collapsible=icon]:hidden">
               EWWW
             </h1>
           </div>
@@ -73,8 +73,8 @@ export default function DashboardLayout({
           ))}
         </SidebarMenu>
         <SidebarFooter>
-          <div className="flex items-center gap-2 p-2 group-data-[collapsible=icon]:justify-center">
-            <Avatar className="h-8 w-8">
+          <div className="flex items-center gap-3 p-2 group-data-[collapsible=icon]:justify-center">
+            <Avatar className="h-9 w-9">
               <AvatarFallback>U</AvatarFallback>
             </Avatar>
             <div className="flex flex-col group-data-[collapsible=icon]:hidden">
@@ -85,16 +85,16 @@ export default function DashboardLayout({
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="flex h-14 items-center justify-between border-b bg-card p-4 lg:justify-end">
+        <header className="flex h-16 items-center justify-between border-b bg-card px-6 lg:justify-end">
           <SidebarTrigger className="lg:hidden" />
-          <h1 className="text-xl font-headline font-semibold lg:hidden">
+          <h1 className="text-2xl font-headline font-semibold lg:hidden">
             EWWW
           </h1>
           <div>
             <ThemeToggle />
           </div>
         </header>
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+        <main className="flex-1 overflow-y-auto bg-background/95 p-4 md:p-6 lg:p-8">
           {children}
         </main>
       </SidebarInset>

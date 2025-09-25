@@ -52,12 +52,12 @@ export default function LandingPage() {
         <section className="relative w-full h-screen flex items-center justify-center text-white">
           <div className="absolute inset-0 bg-black/60 z-10" />
           <Image
-            src="https://picsum.photos/seed/forest/1920/1080"
-            alt="A lush, green forest canopy viewed from above, symbolizing nature and sustainability."
+            src="https://picsum.photos/seed/green-nature/1920/1080"
+            alt="A lush, green forest path covered in mist, symbolizing nature and a clean environment."
             fill
             className="object-cover"
             priority
-            data-ai-hint="lush forest canopy"
+            data-ai-hint="misty forest path"
           />
           <div className="container px-4 md:px-6 text-center relative z-20">
             <div className="max-w-4xl mx-auto">

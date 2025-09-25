@@ -44,12 +44,12 @@ export default function LandingPage() {
         <section className="relative w-full py-20 md:py-32 lg:py-40">
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-10" />
           <Image
-            src="https://picsum.photos/seed/ewww-bg/1920/1080"
-            alt="Eco-friendly modern architecture with lush greenery"
+            src="https://picsum.photos/seed/ewww-hero/1920/1080"
+            alt="Lush green valley with a river winding through it, representing a clean environment"
             layout="fill"
             objectFit="cover"
             className="opacity-20"
-            data-ai-hint="green architecture"
+            data-ai-hint="clean environment nature"
           />
           <div className="container px-4 md:px-6 text-center relative z-20">
             <div className="max-w-3xl mx-auto">

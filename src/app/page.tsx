@@ -44,12 +44,12 @@ export default function LandingPage() {
         <section className="relative w-full py-20 md:py-32 lg:py-40">
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-10" />
           <Image
-            src="https://picsum.photos/seed/nature-bg/1920/1080"
-            alt="Lush green landscape"
+            src="https://firebasestudio.ai/api/files/3371a5c6-6946-4c4f-a841-f6721051515f/EWWW-frontpage-bg.jpg"
+            alt="Eco-friendly modern architecture with lush greenery"
             layout="fill"
             objectFit="cover"
             className="opacity-20"
-            data-ai-hint="nature landscape"
+            data-ai-hint="green architecture"
           />
           <div className="container px-4 md:px-6 text-center relative z-20">
             <div className="max-w-3xl mx-auto">

@@ -32,12 +32,12 @@ export default function LandingPage() {
         <section className="relative w-full h-screen flex items-center justify-center text-white">
           <div className="absolute inset-0 bg-black/60 z-10" />
           <Image
-            src="https://picsum.photos/seed/forest-road/1920/1080"
-            alt="A winding road through a dense forest"
+            src="https://picsum.photos/seed/forest-path/1920/1080"
+            alt="A path through a dense, green forest"
             fill
             className="object-cover"
             priority
-            data-ai-hint="pine forest road"
+            data-ai-hint="forest path"
           />
           <div className="container px-4 md:px-6 text-center relative z-20">
             <div className="max-w-4xl mx-auto">

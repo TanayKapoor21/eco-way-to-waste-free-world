@@ -50,14 +50,14 @@ export default function LandingPage() {
       </header>
       <main className="flex-1">
         <section className="relative w-full h-screen flex items-center justify-center text-white">
-          <div className="absolute inset-0 bg-black/50 z-10" />
+          <div className="absolute inset-0 bg-black/60 z-10" />
           <Image
-            src="https://picsum.photos/seed/mountains/1920/1080"
-            alt="A majestic, serene mountain range at dusk, symbolizing a clean and natural world."
+            src="https://picsum.photos/seed/forest/1920/1080"
+            alt="A lush, green forest canopy viewed from above, symbolizing nature and sustainability."
             fill
             className="object-cover"
             priority
-            data-ai-hint="serene mountain landscape"
+            data-ai-hint="lush forest canopy"
           />
           <div className="container px-4 md:px-6 text-center relative z-20">
             <div className="max-w-4xl mx-auto">

@@ -3,44 +3,76 @@
     {
       "id": "avatar1",
       "description": "User avatar 1",
-      "imageUrl": "https://picsum.photos/seed/avatar1/100/100",
+      "imageUrl": "https://images.unsplash.com/photo-1607529378676-a20456ee2f6b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cGVyc29uJTIwc21pbGluZ3xlbnwwfHx8fDE3NTg2OTc5Nzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "person smiling"
     },
     {
       "id": "avatar2",
       "description": "User avatar 2",
-      "imageUrl": "https://picsum.photos/seed/avatar2/100/100",
+      "imageUrl": "https://images.unsplash.com/photo-1612847759772-17b4d420af34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3b21hbiUyMG91dGRvb3JzfGVufDB8fHx8MTc1ODcyNDYxOXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "woman outdoors"
     },
     {
       "id": "avatar3",
       "description": "User avatar 3",
-      "imageUrl": "https://picsum.photos/seed/avatar3/100/100",
+      "imageUrl": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTg3MDg5NTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "man portrait"
     },
     {
       "id": "avatar4",
       "description": "User avatar 4",
-      "imageUrl": "https://picsum.photos/seed/avatar4/100/100",
+      "imageUrl": "https://images.unsplash.com/photo-1720255487275-02e587eb7044?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwZXJzb24lMjBuYXR1cmV8ZW58MHx8fHwxNzU4Njg4NTgxfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "person nature"
     },
     {
       "id": "waste-classifier-hero",
       "description": "Hero image for waste classifier",
-      "imageUrl": "https://picsum.photos/seed/waste1/1200/400",
+      "imageUrl": "https://images.unsplash.com/photo-1665904346443-8d20e0364129?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cmVjeWNsaW5nJTIwYmluc3xlbnwwfHx8fDE3NTg3MTE5MTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "recycling bins"
     },
     {
       "id": "forum-post-1",
       "description": "Image for a forum post about composting",
-      "imageUrl": "https://picsum.photos/seed/compost1/400/250",
+      "imageUrl": "https://images.unsplash.com/photo-1680847307417-b6ae9b78cda6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjb21wb3N0JTIwYmlufGVufDB8fHx8MTc1ODczNzYzNnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "compost bin"
     },
     {
       "id": "forum-post-2",
       "description": "Image for a forum post about reducing plastic",
-      "imageUrl": "https://picsum.photos/seed/plastic2/400/250",
+      "imageUrl": "https://images.unsplash.com/photo-1638024912888-ac77d663c72f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cmV1c2FibGUlMjBiYWdzfGVufDB8fHx8MTc1ODc5MjU4NHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "reusable bags"
+    }
+  ],
+  "heroImages": [
+    {
+      "id": "hero1",
+      "description": "A lush, green forest path covered in mist.",
+      "imageUrl": "https://picsum.photos/seed/forest1/1920/1080",
+      "imageHint": "misty forest path"
+    },
+    {
+      "id": "hero2",
+      "description": "Sunlight filtering through the canopy of a dense forest.",
+      "imageUrl": "https://picsum.photos/seed/forest2/1920/1080",
+      "imageHint": "forest sunlight"
+    },
+    {
+      "id": "hero3",
+      "description": "A close-up of green leaves with water droplets.",
+      "imageUrl": "https://picsum.photos/seed/nature3/1920/1080",
+      "imageHint": "green leaves"
+    },
+    {
+      "id": "hero4",
+      "description": "A winding road through a dense pine forest.",
+      "imageUrl": "https://picsum.photos/seed/forest4/1920/1080",
+      "imageHint": "pine forest road"
+    },
+    {
+      "id": "hero5",
+      "description": "A sustainable, green-roofed building integrated with nature.",
+      "imageUrl": "https://picsum.photos/seed/sustainability5/1920/1080",
+      "imageHint": "green architecture"
     }
   ]
 }

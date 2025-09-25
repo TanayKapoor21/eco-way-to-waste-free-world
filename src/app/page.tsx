@@ -1,7 +1,16 @@
+"use client";
+import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Leaf, Recycle, ArrowRight, Bot, Camera, Map, Scan, Users } from 'lucide-react';
 import Image from 'next/image';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import { placeholderHeroImages } from '@/lib/placeholder-images';
 
 const features = [
   {
@@ -27,6 +36,10 @@ const features = [
 ];
 
 export default function LandingPage() {
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: false })
+  );
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="px-4 lg:px-6 h-16 flex items-center bg-transparent text-white absolute top-0 left-0 right-0 z-50">
@@ -51,14 +64,29 @@ export default function LandingPage() {
       <main className="flex-1">
         <section className="relative w-full h-screen flex items-center justify-center text-white">
           <div className="absolute inset-0 bg-black/60 z-10" />
-          <Image
-            src="https://picsum.photos/seed/green-nature/1920/1080"
-            alt="A lush, green forest path covered in mist, symbolizing nature and a clean environment."
-            fill
-            className="object-cover"
-            priority
-            data-ai-hint="misty forest path"
-          />
+          <Carousel
+            plugins={[plugin.current]}
+            className="w-full h-full"
+            onMouseEnter={plugin.current.stop}
+            onMouseLeave={plugin.current.reset}
+          >
+            <CarouselContent>
+              {placeholderHeroImages.map((image, index) => (
+                <CarouselItem key={index}>
+                  <div className="w-full h-screen">
+                    <Image
+                      src={image.imageUrl}
+                      alt={image.description}
+                      fill
+                      className="object-cover"
+                      priority={index === 0}
+                      data-ai-hint={image.imageHint}
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
           <div className="container px-4 md:px-6 text-center relative z-20">
             <div className="max-w-4xl mx-auto">
               <h1 className="text-5xl font-extrabold font-headline tracking-tight sm:text-6xl md:text-7xl lg:text-8xl !leading-tight">

@@ -47,7 +47,7 @@ export default function DashboardLayout({
         <SidebarHeader>
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" className="text-sidebar-primary hover:bg-sidebar-accent" asChild>
-              <Link href="/dashboard">
+              <Link href="/">
                 <Leaf />
               </Link>
             </Button>

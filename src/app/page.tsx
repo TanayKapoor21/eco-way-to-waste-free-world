@@ -1,8 +1,9 @@
+
 "use client";
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Leaf, Recycle, ArrowRight, Bot, Camera, Map, Scan, Users } from 'lucide-react';
+import { Leaf, ArrowRight, Camera, Scan, Map, Bot } from 'lucide-react';
 import Image from 'next/image';
 import {
   Carousel,
@@ -12,32 +13,9 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { placeholderHeroImages } from '@/lib/placeholder-images';
 
-const features = [
-  {
-    name: 'AI Waste Classifier',
-    description: 'Snap a photo of any item, and our AI will instantly tell you how to dispose of it responsibly.',
-    icon: Camera
-  },
-  {
-    name: 'AR Waste Sorter',
-    description: 'Use your camera for real-time guidance, making waste sorting effortless and accurate.',
-    icon: Scan
-  },
-  {
-    name: 'Recycling Locator',
-    description: 'Find the nearest recycling centers and e-waste drop-off points with our interactive map.',
-    icon: Map
-  },
-  {
-    name: 'AI Disposal Assistant',
-    description: 'Have a question? Our AI chatbot provides instant, expert advice on all things waste management.',
-    icon: Bot
-  }
-];
-
 export default function LandingPage() {
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: false })
+    Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: false })
   );
 
   return (
@@ -67,8 +45,6 @@ export default function LandingPage() {
           <Carousel
             plugins={[plugin.current]}
             className="w-full h-full"
-            onMouseEnter={plugin.current.stop}
-            onMouseLeave={plugin.current.reset}
           >
             <CarouselContent>
               {placeholderHeroImages.map((image, index) => (
@@ -151,3 +127,26 @@ export default function LandingPage() {
     </div>
   )
 }
+
+const features = [
+  {
+    name: 'AI Waste Classifier',
+    description: 'Snap a photo of any item, and our AI will instantly tell you how to dispose of it responsibly.',
+    icon: Camera
+  },
+  {
+    name: 'AR Waste Sorter',
+    description: 'Use your camera for real-time guidance, making waste sorting effortless and accurate.',
+    icon: Scan
+  },
+  {
+    name: 'Recycling Locator',
+    description: 'Find the nearest recycling centers and e-waste drop-off points with our interactive map.',
+    icon: Map
+  },
+  {
+    name: 'AI Disposal Assistant',
+    description: 'Have a question? Our AI chatbot provides instant, expert advice on all things waste management.',
+    icon: Bot
+  }
+];

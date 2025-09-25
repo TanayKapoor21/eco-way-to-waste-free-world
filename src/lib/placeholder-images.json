@@ -67,12 +67,6 @@
       "description": "A winding road through a dense pine forest.",
       "imageUrl": "https://picsum.photos/seed/forest4/1920/1080",
       "imageHint": "pine forest road"
-    },
-    {
-      "id": "hero5",
-      "description": "A sustainable, green-roofed building integrated with nature.",
-      "imageUrl": "https://picsum.photos/seed/sustainability5/1920/1080",
-      "imageHint": "green architecture"
     }
   ]
 }

@@ -5,19 +5,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Leaf, ArrowRight, Camera, Scan, Map, Bot } from 'lucide-react';
 import Image from 'next/image';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import { placeholderHeroImages } from '@/lib/placeholder-images';
 
 export default function LandingPage() {
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: false })
-  );
-
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="px-4 lg:px-6 h-16 flex items-center bg-transparent text-white absolute top-0 left-0 right-0 z-50">
@@ -43,12 +32,12 @@ export default function LandingPage() {
         <section className="relative w-full h-screen flex items-center justify-center text-white">
           <div className="absolute inset-0 bg-black/60 z-10" />
           <Image
-            src={placeholderHeroImages[0].imageUrl}
-            alt={placeholderHeroImages[0].description}
+            src="https://picsum.photos/seed/forest-road/1920/1080"
+            alt="A winding road through a dense forest"
             fill
             className="object-cover"
             priority
-            data-ai-hint={placeholderHeroImages[0].imageHint}
+            data-ai-hint="pine forest road"
           />
           <div className="container px-4 md:px-6 text-center relative z-20">
             <div className="max-w-4xl mx-auto">
@@ -86,15 +75,34 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl items-stretch gap-6 py-12 lg:grid-cols-2 lg:gap-8">
-              {features.map((feature) => (
-                <div key={feature.name} className="flex flex-col justify-start space-y-4 p-6 rounded-xl bg-card border-2 border-transparent hover:border-primary/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-                  <div className="p-4 bg-primary/10 rounded-full w-fit">
-                    <feature.icon className="h-8 w-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold font-headline">{feature.name}</h3>
-                  <p className="text-muted-foreground text-base">{feature.description}</p>
+              <div className="flex flex-col justify-start space-y-4 p-6 rounded-xl bg-card border-2 border-transparent hover:border-primary/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                <div className="p-4 bg-primary/10 rounded-full w-fit">
+                  <Camera className="h-8 w-8 text-primary" />
                 </div>
-              ))}
+                <h3 className="text-2xl font-bold font-headline">AI Waste Classifier</h3>
+                <p className="text-muted-foreground text-base">Snap a photo of any item, and our AI will instantly tell you how to dispose of it responsibly.</p>
+              </div>
+              <div className="flex flex-col justify-start space-y-4 p-6 rounded-xl bg-card border-2 border-transparent hover:border-primary/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                <div className="p-4 bg-primary/10 rounded-full w-fit">
+                  <Scan className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold font-headline">AR Waste Sorter</h3>
+                <p className="text-muted-foreground text-base">Use your camera for real-time guidance, making waste sorting effortless and accurate.</p>
+              </div>
+              <div className="flex flex-col justify-start space-y-4 p-6 rounded-xl bg-card border-2 border-transparent hover:border-primary/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                <div className="p-4 bg-primary/10 rounded-full w-fit">
+                  <Map className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold font-headline">Recycling Locator</h3>
+                <p className="text-muted-foreground text-base">Find the nearest recycling centers and e-waste drop-off points with our interactive map.</p>
+              </div>
+              <div className="flex flex-col justify-start space-y-4 p-6 rounded-xl bg-card border-2 border-transparent hover:border-primary/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                <div className="p-4 bg-primary/10 rounded-full w-fit">
+                  <Bot className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold font-headline">AI Disposal Assistant</h3>
+                <p className="text-muted-foreground text-base">Have a question? Our AI chatbot provides instant, expert advice on all things waste management.</p>
+              </div>
             </div>
           </div>
         </section>
@@ -114,26 +122,3 @@ export default function LandingPage() {
     </div>
   )
 }
-
-const features = [
-  {
-    name: 'AI Waste Classifier',
-    description: 'Snap a photo of any item, and our AI will instantly tell you how to dispose of it responsibly.',
-    icon: Camera
-  },
-  {
-    name: 'AR Waste Sorter',
-    description: 'Use your camera for real-time guidance, making waste sorting effortless and accurate.',
-    icon: Scan
-  },
-  {
-    name: 'Recycling Locator',
-    description: 'Find the nearest recycling centers and e-waste drop-off points with our interactive map.',
-    icon: Map
-  },
-  {
-    name: 'AI Disposal Assistant',
-    description: 'Have a question? Our AI chatbot provides instant, expert advice on all things waste management.',
-    icon: Bot
-  }
-];

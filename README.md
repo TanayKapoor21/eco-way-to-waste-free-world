@@ -1,7 +1,7 @@
 # 🌍 Eco-Way to Waste-Free World (EWWW)
 
 <div align="center">
-  <img src="./eco_way_hero_image_1774439933912.png" alt="Eco-Way Hero Image" width="800">
+  
 
   ### 🌱 A sustainable digital solution to reduce waste, promote recycling, and guide users toward eco-friendly practices.
 
